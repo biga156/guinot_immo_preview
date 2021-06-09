@@ -1,0 +1,62 @@
+
+ 
+  <div class="container mt-4 d-block p-2 bg-secondary text-white">
+           
+     {#{{ form_widget(formlocation) }}#}
+
+    {{ form_start(formlocation) }}
+
+    <div class="form-group ">
+        <div class="form-group row">
+            <div class="col-md-6"> {{ form_row(formlocation.denomination) }} </div>
+            <div class="col-md-2"> {{ form_row(formlocation.categorie) }} </div>
+            <div class="col-md-2"> {{ form_row(formlocation.photo) }} </div>
+            <div class="col-md-2"> {{ form_row(formlocation.images) }} </div>
+            {% for image in formlocation.images %}
+                <div>
+                    <img src="{{ asset('images/uploads' ~ image.name) }}" alt="image" width="150">
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-md-12"> {{ form_row(formlocation.description) }} </div>
+            
+        </div>
+        
+        <div class="row">
+            <div class="col-md-2"> {{ form_row(formlocation.surface) }} </div>
+            <div class="col-md-2"> {{ form_row(formlocation.type) }} </div>
+            <div class="col-md-2"> {{ form_row(formlocation.chambre) }} </div>
+            <div class="col-md-2"> {{ form_row(formlocation.etage) }} </div>
+            <div class="col-md-2"> {{ form_row(formlocation.prix) }} </div>
+           
+        </div>
+
+        <div class="row">
+            <div class="col-md-8"> {{ form_row(formlocation.adresse) }} </div>
+             <div class="col-md-4"> {{ form_row(formlocation.accessibility) }} </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"> {{ form_row(formlocation.cp) }} </div>
+            <div class="col-md-5"> {{ form_row(formlocation.ville) }} </div>
+            <div class="col-md-5"> {{ form_row(formlocation.pays) }} </div>
+        </div>
+        <div class="row">
+            {% if app.request.attributes.get('_route') == 'location.edition' %}
+                    <h4>    Les images </h4>
+                    {% for image in formlocation.images %}
+                        <div>
+                            <img src="{{ asset('images/uploads' ~ image.name) }}" alt="image" width="150">
+                            <a href="{{ path('location_delete_image', {id: image.id}) }}"
+                            data-delete data-token="{{ csrf_token('delete' ~ image.id ) }}"> Supprimer </a>
+                        </div>
+                    {% endfor %}
+            {% endif %}    
+        </div>
+         <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_end(formlocation) }}
+        
+</div>
